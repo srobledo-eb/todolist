@@ -1,0 +1,27 @@
+<h1>To-Do List</h1>
+<a href="{% url 'logout'%}">Close session</a>
+<ul>
+{% for todo in object_list %}
+    {% if todo.done %}
+    <li>
+        <strike> {{ todo.description }} - {{ todo.priority.description }}
+        - {{ todo.assigned_user }} </strike>
+    </li> | 
+    <a href="{% url 'todolist_app:update' pk=todo.id %}">Update</a> - 
+    <a href="{% url 'todolist_app:delete' pk=todo.id %}">Delete</a> - 
+    <a href="{% url 'todolist_app:update_user' pk=todo.id %}">Reassign</a>
+    {% else %}
+    <li>
+        {{ todo.description }} - {{ todo.priority.description }}
+        - {{ todo.assigned_user }}
+    </li> | 
+    <a href="{% url 'todolist_app:update' pk=todo.id %}">Update</a> - 
+    <a href="{% url 'todolist_app:delete' pk=todo.id %}">Delete</a> - 
+    <a href="{% url 'todolist_app:update_user' pk=todo.id %}">Reassign</a>
+
+    {% endif %}
+{% empty %}
+    <li>No todos yet.</li>
+{% endfor %}
+</ul>
+<a href="{% url 'todolist_app:create' %}">New Task</a>
